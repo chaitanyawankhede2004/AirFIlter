@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AirFilter - Smart Indoor Air Quality & Purification System</title>
+  
+  <!-- PWA Metadata & Theme -->
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#0f172a">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="AirFilter">
+  <link rel="apple-touch-icon" href="https://img.icons8.com/color/192/000000/air-quality.png">
+  
+  <!-- Google Fonts & Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <!-- App Styles -->
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+  <!-- Navigation Header -->
+  <header>
+    <div class="nav-container">
+      <div class="logo-group" id="navLogo">
+        <div class="logo-icon">
+          <i class="fa-solid fa-wind"></i>
+        </div>
+        <span>AirFilter</span>
+      </div>
+
+      <div class="nav-actions">
+        <button class="btn pwa-install-btn" id="pwaInstallBtn" style="display: none;">
+          <i class="fa-solid fa-download"></i> Install App
+        </button>
+
+        <button class="theme-toggle-btn" id="themeToggleBtn" title="Toggle Light/Dark Theme">
+          <i class="fa-solid fa-sun"></i>
+        </button>
+
+        <button class="btn btn-outline" id="loginNavBtn">
+          <i class="fa-solid fa-user"></i> Sign In
+        </button>
+
+        <div id="userProfileGroup" style="display: none; align-items: center; gap: 0.75rem;">
+          <span style="font-size: 0.9rem; font-weight: 600;" id="userNameDisplay">User</span>
+          <button class="btn btn-outline" id="logoutBtn" style="padding: 0.4rem 0.8rem; font-size: 0.8rem;">
+            <i class="fa-solid fa-arrow-right-from-bracket"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content Wrapper -->
+  <main style="flex: 1;">
+
+    <!-- ===================================================================
+         SECTION 1: LANDING PAGE VIEW
+         =================================================================== -->
+    <section class="page-section active" id="landingView">
+      <div class="hero-section">
+        <div>
+          <div class="hero-tag">
+            <i class="fa-solid fa-shield-halved"></i> Smart Home Protection
+          </div>
+          <h1 class="hero-title">
+            Breathe Cleaner Air in <span>Every Room</span>
+          </h1>
+          <p class="hero-subtitle">
+            Real-time indoor PM2.5 & PM10 monitoring paired with automated air purification telemetry. Installed directly in individual homes for complete family wellness.
+          </p>
+          <div class="hero-actions">
+            <button class="btn btn-primary" id="heroCtaBtn">
+              <i class="fa-solid fa-gauge-high"></i> Open Dashboard
+            </button>
+            <button class="btn btn-outline" id="heroDemoBtn">
+              <i class="fa-solid fa-play"></i> Live Demo Stream
+            </button>
+          </div>
+        </div>
+
+        <div class="glass-card" style="padding: 2.5rem; text-align: center; position: relative; overflow: hidden;">
+          <div style="font-size: 0.85rem; color: var(--text-muted); font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em;">Live Telemetry Preview</div>
+          <div style="font-size: 4rem; font-weight: 800; margin: 1rem 0; color: var(--accent-emerald);">
+            AQI 28
+          </div>
+          <div style="display: inline-block; padding: 0.4rem 1.2rem; background: rgba(16,185,129,0.2); color: var(--accent-emerald); border-radius: 50px; font-weight: 700;">
+            <i class="fa-solid fa-circle-check"></i> Excellent Air Quality
+          </div>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 2rem; border-top: 1px solid var(--border-color); padding-top: 1.5rem;">
+            <div>
+              <div style="color: var(--text-muted); font-size: 0.85rem;">PM 2.5</div>
+              <div style="font-size: 1.5rem; font-weight: 700;">8.4 <span style="font-size: 0.8rem; font-weight: 400;">µg/m³</span></div>
+            </div>
+            <div>
+              <div style="color: var(--text-muted); font-size: 0.85rem;">PM 10</div>
+              <div style="font-size: 1.5rem; font-weight: 700;">18.2 <span style="font-size: 0.8rem; font-weight: 400;">µg/m³</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Feature Grid -->
+      <div class="features-grid">
+        <div class="glass-card feature-card">
+          <div class="feature-icon">
+            <i class="fa-solid fa-microchip"></i>
+          </div>
+          <h3 class="feature-title">ESP8266 IoT Hardware</h3>
+          <p class="feature-desc">Connects seamlessly with SDS011 sensors and ThingSpeak Cloud for instant hardware synchronization.</p>
+        </div>
+
+        <div class="glass-card feature-card">
+          <div class="feature-icon">
+            <i class="fa-solid fa-mobile-screen-button"></i>
+          </div>
+          <h3 class="feature-title">Mobile App (PWA)</h3>
+          <p class="feature-desc">Download directly to your smartphone's home screen for effortless remote home monitoring.</p>
+        </div>
+
+        <div class="glass-card feature-card">
+          <div class="feature-icon">
+            <i class="fa-solid fa-chart-line"></i>
+          </div>
+          <h3 class="feature-title">Realtime Analytics</h3>
+          <p class="feature-desc">Track historical trends, spot daily pollution spikes, and receive intelligent filtration advice.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================================================================
+         SECTION 2: AUTHENTICATION VIEW
+         =================================================================== -->
+    <section class="page-section" id="authView">
+      <div class="glass-card auth-container">
+        <div class="auth-tabs">
+          <div class="auth-tab active" id="tabLogin">Sign In</div>
+          <div class="auth-tab" id="tabRegister">Register Device</div>
+        </div>
+
+        <form id="authForm">
+          <div class="form-group">
+            <label class="form-label">Email Address / Home ID</label>
+            <input type="email" class="form-input" id="authEmail" placeholder="user@home.com" required>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Password</label>
+            <input type="password" class="form-input" id="authPassword" placeholder="••••••••" required>
+          </div>
+
+          <button type="submit" class="btn btn-primary" id="authSubmitBtn" style="width: 100%; justify-content: center; margin-top: 1rem; padding: 0.8rem;">
+            Sign In to Dashboard
+          </button>
+        </form>
+      </div>
+    </section>
+
+    <!-- ===================================================================
+         SECTION 3: DASHBOARD VIEW
+         =================================================================== -->
+    <section class="page-section" id="dashboardView">
+      <div class="dashboard-container">
+        
+        <!-- Header Controls & Room Selector -->
+        <div class="dashboard-header">
+          <div style="display: flex; align-items: center; gap: 1rem; flex-wrap: wrap;">
+            <div class="room-selector">
+              <i class="fa-solid fa-house-signal" style="color: var(--accent-cyan);"></i>
+              <select class="room-select" id="roomSelect">
+                <option value="Living Room">Living Room</option>
+                <option value="Bedroom">Main Bedroom</option>
+                <option value="Kitchen">Kitchen</option>
+                <option value="Kids Room">Kids Room</option>
+              </select>
+            </div>
+
+            <div class="live-badge" id="liveStatusBadge">
+              <span class="dot"></span> Live Telemetry Connected
+            </div>
+          </div>
+
+          <div style="color: var(--text-muted); font-size: 0.85rem;">
+            ThingSpeak Channel ID: <strong>#3491820</strong>
+          </div>
+        </div>
+
+        <!-- Dashboard Grid Layout -->
+        <div class="dash-grid">
+          
+          <!-- Card 1: Main AQI Radial Gauge -->
+          <div class="glass-card aqi-card">
+            <div style="font-size: 0.9rem; font-weight: 600; color: var(--text-muted);">Air Quality Index (AQI)</div>
+            
+            <div class="aqi-gauge-wrapper">
+              <svg class="aqi-svg" viewBox="0 0 180 180">
+                <circle class="aqi-circle-bg" cx="90" cy="90" r="80"></circle>
+                <circle class="aqi-circle-progress" id="aqiCircleProgress" cx="90" cy="90" r="80"></circle>
+              </svg>
+
+              <div class="aqi-value-container">
+                <div class="aqi-num" id="aqiNum">--</div>
+                <div class="aqi-label">US EPA Standard</div>
+              </div>
+            </div>
+
+            <div class="aqi-status-pill" id="aqiStatusPill">Loading Status...</div>
+          </div>
+
+          <!-- Card 2: PM2.5 Telemetry -->
+          <div class="glass-card pm-card">
+            <div>
+              <div class="pm-card-header">
+                <span class="pm-title">Fine Particles (PM2.5)</span>
+                <i class="fa-solid fa-smog" style="color: var(--accent-cyan);"></i>
+              </div>
+              <div class="pm-value">
+                <span id="pm25Value">--</span><span class="pm-unit">µg/m³</span>
+              </div>
+              <div style="font-size: 0.8rem; color: var(--text-muted);">Safe limit: 0 - 12 µg/m³</div>
+            </div>
+            
+            <div class="pm-bar-bg">
+              <div class="pm-bar-fill" id="pm25Bar"></div>
+            </div>
+          </div>
+
+          <!-- Card 3: PM10 Telemetry -->
+          <div class="glass-card pm-card">
+            <div>
+              <div class="pm-card-header">
+                <span class="pm-title">Coarse Dust (PM10)</span>
+                <i class="fa-solid fa-dust" style="color: var(--accent-blue);"></i>
+              </div>
+              <div class="pm-value">
+                <span id="pm10Value">--</span><span class="pm-unit">µg/m³</span>
+              </div>
+              <div style="font-size: 0.8rem; color: var(--text-muted);">Safe limit: 0 - 54 µg/m³</div>
+            </div>
+
+            <div class="pm-bar-bg">
+              <div class="pm-bar-fill" id="pm10Bar"></div>
+            </div>
+          </div>
+
+          <!-- Card 4: Smart Health Insights -->
+          <div class="glass-card full-width-card insights-card">
+            <div class="insight-icon" id="insightIcon">
+              <i class="fa-solid fa-leaf"></i>
+            </div>
+            <div class="insight-text">
+              <h4 id="insightTitle">Air Quality is Optimal</h4>
+              <p id="insightDesc">Your home air quality is clean and healthy. No elevated particulate matter detected.</p>
+            </div>
+          </div>
+
+          <!-- Card 5: Timeline Chart -->
+          <div class="glass-card full-width-card chart-card">
+            <div class="chart-header">
+              <h3 style="font-size: 1.1rem; font-weight: 700;">Live Particulate History</h3>
+              <div class="chart-controls">
+                <button class="time-btn active" data-range="1h">Realtime</button>
+                <button class="time-btn" data-range="24h">24 Hours</button>
+                <button class="time-btn" data-range="7d">7 Days</button>
+              </div>
+            </div>
+
+            <div style="position: relative; height: 260px; width: 100%;">
+              <canvas id="aqiChartCanvas"></canvas>
+            </div>
+          </div>
+
+          <!-- Card 6: Device & Purification Controls -->
+          <div class="controls-grid">
+            <div class="glass-card control-card">
+              <div style="display: flex; justify-content: space-between; align-items: center;">
+                <div style="font-weight: 600;">Purification Speed</div>
+                <i class="fa-solid fa-fan" style="color: var(--accent-cyan);"></i>
+              </div>
+              <div class="fan-modes">
+                <button class="mode-btn active">Auto</button>
+                <button class="mode-btn">Silent</button>
+                <button class="mode-btn">Turbo</button>
+              </div>
+            </div>
+
+            <div class="glass-card control-card">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+                <div style="font-weight: 600;">HEPA Filter Life</div>
+                <span style="font-weight: 700; color: var(--accent-emerald);">88%</span>
+              </div>
+              <div class="pm-bar-bg" style="height: 10px;">
+                <div style="height: 100%; width: 88%; background: var(--accent-emerald); border-radius: 10px;"></div>
+              </div>
+              <div style="font-size: 0.8rem; color: var(--text-muted); margin-top: 0.5rem;">Estimated replacement in 142 days</div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <div style="max-width: 1280px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+      <div>AirFilter Smart Home System &copy; 2026. All rights reserved.</div>
+      <div>
+        <a href="#" style="color: var(--text-muted); text-decoration: none; margin-left: 1rem;" id="pwaFooterLink">Download App</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- App Script -->
+  <script src="js/app.js"></script>
+
+  <!-- PWA Service Worker Registration -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./sw.js')
+          .then(reg => console.log('ServiceWorker registered:', reg.scope))
+          .catch(err => console.error('ServiceWorker registration failed:', err));
+      });
+    }
+  </script>
+</body>
+</html>
